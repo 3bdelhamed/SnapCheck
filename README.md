@@ -1,2 +1,16 @@
-# SnapCheck-
-SnapCheck revolutionizes attendance tracking with computer vision. Capture attendance instantly through a quick snapshot, ensuring accuracy and efficiency. User-friendly, customizable, and providing real-time updates, SnapCheck streamlines the process for educators and students alike. Embrace the future of attendance management.
+# SnapCheck 📸 - Automated Attendance Tracking with Computer Vision
+
+Welcome to SnapCheck, your go-to solution for effortless and accurate student attendance management using state-of-the-art computer vision technology.
+
+## Features 🚀
+
+- **Instant Capture:** Say goodbye to manual attendance - SnapCheck captures it in a snap!
+  
+- **User-Friendly Interface:** Simplifying attendance tracking for educators and students. 🎓
+
+- **Real-time Updates:** Stay informed with instant attendance updates. 🔄
+
+- **Customization:** Tailor SnapCheck to fit your class structures and attendance policies. ⚙️
+
+- **Data Security:** Your attendance data is secure with advanced encryption and privacy measures. 🔒
+
