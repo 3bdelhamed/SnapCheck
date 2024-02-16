@@ -1,4 +1,4 @@
-![SnapCheck](logo3.png)
+![SnapCheck](logo.png)
 # SnapCheck 📸 - Automated Attendance Tracking with Computer Vision
 
 Welcome to SnapCheck, your go-to solution for effortless and accurate student attendance management using state-of-the-art computer vision technology.
