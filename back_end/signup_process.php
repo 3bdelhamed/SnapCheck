@@ -1,9 +1,9 @@
 <?php
+// connect db
 define("localhost", "localhost");
 define("password", "");
 define("username", "root");
 define("dbname", "university");
-
 @$conn = mysqli_connect(localhost, username, password, dbname);
 
 if ($conn->connect_error) {
@@ -12,34 +12,37 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
-    $id = strtolower(str_replace(" ", "_", $name));
 
-    $checkQuery = "SELECT id FROM student WHERE id = '$id'";
-    $result = $conn->query($checkQuery);
+    $sql = "INSERT INTO student (name) VALUES ('$name')";
 
-    if ($result->num_rows > 0) {
-        $id = $id . '_' . time();
-    }
+    if ($conn->query($sql) === TRUE) {
+        // Retrieve the last inserted ID
+        $id = $conn->insert_id;
 
-    $targetDir = "uploads/";
-    $targetFile = $targetDir . basename($_FILES["image"]["name"]);
-    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+        $targetDir = "uploads/";
+        $imageFileType = strtolower(pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION));
+        $targetFile = $targetDir . $id . "." . $imageFileType;
 
-    $allowedFormats = array("jpg", "jpeg", "png");
+        $allowedFormats = array("jpg", "jpeg", "png");
 
-    if (in_array($imageFileType, $allowedFormats)) {
-        move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
+        if (in_array($imageFileType, $allowedFormats)) {
+            move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
 
-        $sql = "INSERT INTO student (name, image) VALUES ('$name', '$targetFile')";
+            // Update the record with the correct image filename
+            $updateSql = "UPDATE student SET image = '$targetFile' WHERE id = $id";
 
-        if ($conn->query($sql) === TRUE) {
-            echo "Signup successful!";
+            if ($conn->query($updateSql) === TRUE) {
+                echo "Signup successful!";
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "Invalid image format. Allowed formats: JPG, JPEG, PNG.";
         }
     } else {
-        echo "Invalid image format. Allowed formats: JPG, JPEG, PNG.";
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
 $conn->close();
+?>
