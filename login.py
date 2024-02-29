@@ -116,56 +116,6 @@ class App:
             print(f"Error in get_known_encodings_from_db: {e}")
             return None, None
 
-    def register_new_user(self):
-        self.register_new_user_window = tk.Toplevel(self.main_window)
-        self.register_new_user_window.geometry("1200x520+370+120")
-
-        self.accept_button_register_new_user_window = util.get_button(
-            self.register_new_user_window, 'Accept', 'green', self.accept_register_new_user
-        )
-        self.accept_button_register_new_user_window.place(x=750, y=300)
-
-        self.try_again_button_register_new_user_window = util.get_button(
-            self.register_new_user_window, 'Try again', 'red', self.try_again_register_new_user
-        )
-        self.try_again_button_register_new_user_window.place(x=750, y=400)
-
-        self.capture_label = util.get_img_label(self.register_new_user_window)
-        self.capture_label.place(x=10, y=0, width=700, height=500)
-
-        self.add_img_to_label(self.capture_label)
-
-        self.entry_text_register_new_user = util.get_entry_text(self.register_new_user_window)
-        self.entry_text_register_new_user.place(x=750, y=150)
-
-        self.text_label_register_new_user = util.get_text_label(
-            self.register_new_user_window, 'Please, \ninput username:'
-        )
-        self.text_label_register_new_user.place(x=750, y=70)
-
-    def try_again_register_new_user(self):
-        self.register_new_user_window.destroy()
-        self.register_new_user()
-
-    def add_img_to_label(self, label):
-        imgtk = ImageTk.PhotoImage(image=self.most_recent_capture_pil)
-        label.imgtk = imgtk
-        label.configure(image=imgtk)
-
-        self.register_new_user_capture = self.most_recent_capture_arr.copy()
-
-    def accept_register_new_user(self):
-        name = self.entry_text_register_new_user.get(1.0, "end-1c")
-
-        embeddings = face_recognition.face_encodings(self.register_new_user_capture)[0]
-
-        file_path = os.path.join(self.db_dir, '{}.pickle'.format(name))
-        with open(file_path, 'wb') as file:
-            pickle.dump(embeddings, file)
-
-        util.msg_box('Success!', 'User was registered successfully!')
-
-        self.register_new_user_window.destroy()
 
     def start(self):
         self.main_window.mainloop()
